@@ -9,7 +9,9 @@ use App\Http\Controllers\Controller;
 class GunController extends Controller
 {
     public function index() {
-        $data = Gun::latest()->get();
+        $data = Gun::latest()
+            ->with(['magazine'])
+            ->get();
         return response()->json($data);
     }
 
@@ -23,12 +25,23 @@ class GunController extends Controller
     }
 
     public function show($id) {
-        $data = Gun::find($id);
+        $data = Gun::with(['magazine'])
+            ->find($id);
+
+        if (!$data) {
+            return response()->json("Can't find gun");
+        }
+
         return response()->json($data);
     }
 
     public function update(Request $request, $id) {
         $data = Gun::find($id);
+
+        if (!$data) {
+            return response()->json("Can't find gun");
+        }
+
         $data->name = $request->name;
         $data->max_magazine = $request->max_magazine;
         $data->save();
@@ -37,6 +50,11 @@ class GunController extends Controller
 
     public function delete($id) {
         $data = Gun::find($id);
+
+        if (!$data) {
+            return response()->json("Can't find gun");
+        }
+
         $name = $data->name;
         $data->delete();
         return response()->json('success to delete ' . $name);

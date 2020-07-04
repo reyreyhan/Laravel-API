@@ -25,4 +25,9 @@ Route::prefix('soldier')->group(function () {
         Route::put('/{id}', 'Soldier\GunController@update');
         Route::delete('/{id}', 'Soldier\GunController@delete');
     });
+
+    Route::prefix('/magazine')->group(function () {
+        Route::post('/{gun_id}', 'Soldier\MagazineController@store');
+        Route::delete('/{id}', 'Soldier\MagazineController@delete');
+    });
 });
