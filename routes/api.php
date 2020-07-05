@@ -40,5 +40,10 @@ Route::prefix('store')->group(function () {
         Route::put('/{id}', 'Store\ProductController@update');
         Route::delete('/{id}', 'Store\ProductController@delete');
     });
+
+    Route::prefix('/transaction')->group(function () {
+        Route::get('', 'Store\TransactionController@index');
+        Route::post('/{product_id}', 'Store\TransactionController@store');
+    });
 });
 

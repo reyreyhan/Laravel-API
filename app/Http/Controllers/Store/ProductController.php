@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 class ProductController extends Controller
 {
     public function index() {
-        $data = Product
-            ::latest()
+        $data = Product::with(['transaction'])
+            ->latest()
             ->get();
         return response()->json($data);
     }
@@ -26,7 +26,7 @@ class ProductController extends Controller
     }
 
     public function show($id) {
-        $data = Product::find($id);
+        $data = Product::with(['transaction'])->find($id);
 
         if (!$data) {
             return response()->json("Can't find product");
