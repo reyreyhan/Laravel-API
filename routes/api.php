@@ -31,3 +31,14 @@ Route::prefix('soldier')->group(function () {
         Route::delete('/{id}', 'Soldier\MagazineController@delete');
     });
 });
+
+Route::prefix('store')->group(function () {
+    Route::prefix('/product')->group(function () {
+        Route::get('', 'Store\ProductController@index');
+        Route::post('', 'Store\ProductController@store');
+        Route::get('/{id}', 'Store\ProductController@show');
+        Route::put('/{id}', 'Store\ProductController@update');
+        Route::delete('/{id}', 'Store\ProductController@delete');
+    });
+});
+
